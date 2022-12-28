@@ -15,7 +15,7 @@ namespace ExerciseApi.Data
 		}
 
         private const string CONNECTION_STRING = "Host=localhost;" +
-            "Port=5455;" + // THIS!!!!!
+            "Port=5455;" +
             "Username=postgresUser;" +
             "Password=postgresPW;" +
             "Database=postgresDB";
