@@ -6,7 +6,6 @@ namespace ExerciseApi.Models
 	{
 		public List<Equipment>? Equipments { get; set; }
 		public List<ExerciseRep>? ExerciseSet { get; set; }
-		public DateTime Duration { get; set; }
 		public bool Completed { get; set; }
 	}
 }
