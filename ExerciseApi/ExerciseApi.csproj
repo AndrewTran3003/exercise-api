@@ -10,15 +10,31 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="Models\Exercise Components\" />
+    <None Remove="Data\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Abstractions" />
+    <None Remove="Models\Break\" />
+    <None Remove="Models\Time\" />
+    <None Remove="Models\Equipment\" />
+    <None Remove="Models\ExerciseComponents\ExerciseModel\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Models\Exercise Components\" />
+    <Folder Include="Data\" />
+    <Folder Include="Models\Break\" />
+    <Folder Include="Models\Time\" />
+    <Folder Include="Models\Equipment\" />
+    <Folder Include="Models\ExerciseComponents\ExerciseModel\" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
-namespace ExerciseApi.Models
+namespace ExerciseApi.Models.Components
 {
-	public class ExerciseComponent
+	public class Component
 	{
         public Guid Id { get; set; }
         public string? Name { get; set; }
