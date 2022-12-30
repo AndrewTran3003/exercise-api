@@ -1,13 +1,12 @@
 ﻿using System;
+using ExerciseApi.Models.ExerciseComponents.ExerciseModel;
+using ExerciseApi.Models.Components;
 namespace ExerciseApi.Models
 {
-	public class WorkoutDay
+	public class WorkoutDay:Component
 	{
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
-        public String? Description { get; set; }
-        public String? Name { get; set; }
-        public List<ExerciseComponent>? WorkoutPlan { get; set; }
+        public DateTime DateTaken { get; set; }
+        public List<ExerciseFacade>? Exercises { get; set; }
         public bool Completed { get; set; }
     }
 }

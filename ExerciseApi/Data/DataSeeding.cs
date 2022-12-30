@@ -1,6 +1,7 @@
 ﻿using System;
 using ExerciseApi.Models;
-using ExerciseApi.Models.ExerciseComponents;
+using ExerciseApi.Models.Equipment;
+using ExerciseApi.Models.ExerciseComponents.ExerciseModel;
 
 namespace ExerciseApi.Data
 {
@@ -22,42 +23,30 @@ namespace ExerciseApi.Data
 			return new WorkoutDay
 			{
 				Id = _workoutDayId,
-				Date = DateTime.Now,
+				DateTaken = DateTime.Now,
 				Name = "Monday's workout",
 				Description = "My monday workout",
 				Completed = false,
-				WorkoutPlan = GetWorkoutPlan()
+				Exercises = null
 			};
 
 		}
 
-		public List<ExerciseComponent> GetWorkoutPlan()
-		{
-			return new List<ExerciseComponent>()
-			{
 
-			};
-		}
-		private Exercise TreadmillRunning()
+
+        private Exercise TreadmillRunning()
 		{
 			return new Exercise
-			{
+            {
 				Id = Guid.NewGuid(),
 				Name = "Treadmill running",
 				Description = "Warm up treadmill running",
-				Duration = 10,
-				Equipments = new List<Equipment>()
-				{
-					Treadmill(),
-					Towel()
-				}
-
-
 			};
 		}
-		private Equipment Treadmill()
+        #region Equipment
+        private BaseEquipment Treadmill()
 		{
-			return new Equipment
+			return new BaseEquipment
 			{
 				Id = Guid.NewGuid(),
 				Name = "Treadmill",
@@ -65,9 +54,9 @@ namespace ExerciseApi.Data
 				Price = 999.99
 			};
 		}
-		private Equipment Towel()
+		private BaseEquipment Towel()
 		{
-            return new Equipment
+            return new BaseEquipment
             {
                 Id = Guid.NewGuid(),
                 Name = "Towel",
@@ -75,6 +64,7 @@ namespace ExerciseApi.Data
                 Price = 4.0
             };
         }
+        #endregion
     }
 }
 

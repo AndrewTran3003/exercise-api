@@ -24,9 +24,17 @@
     <None Remove="Data\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Abstractions" />
+    <None Remove="Models\Break\" />
+    <None Remove="Models\Time\" />
+    <None Remove="Models\Equipment\" />
+    <None Remove="Models\ExerciseComponents\ExerciseModel\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Data\" />
+    <Folder Include="Models\Break\" />
+    <Folder Include="Models\Time\" />
+    <Folder Include="Models\Equipment\" />
+    <Folder Include="Models\ExerciseComponents\ExerciseModel\" />
   </ItemGroup>
 </Project>
