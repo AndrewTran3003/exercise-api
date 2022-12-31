@@ -1,7 +1,7 @@
 ﻿using System;
 using ExerciseApi.Models.Components;
 
-namespace ExerciseApi.Models
+namespace ExerciseApi.Models.Break
 {
 	public class BreakWithActions:TimeComponent
 	{
