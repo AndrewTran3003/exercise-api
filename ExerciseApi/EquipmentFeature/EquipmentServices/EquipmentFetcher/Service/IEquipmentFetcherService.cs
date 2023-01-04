@@ -5,7 +5,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Servic
 {
     public interface IEquipmentFetcherService
     {
-        public OperationResult<EquipmentEntity> GetEquipmentById(string equipmentId);
+        public Task<OperationResult<EquipmentEntity>> GetEquipmentByIdAsync(string equipmentId);
         public OperationResult<List<EquipmentEntity>> GetAllEquipments();
     }
 }

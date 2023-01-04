@@ -18,10 +18,10 @@ public class EquipmentsController : ControllerBase
     }
     [HttpGet]
     [Route("Equipments/{equipmentId}")]
-    public IActionResult GetEquipment(string equipmentId)
+    public async Task<IActionResult> GetEquipment(string equipmentId)
     {
-        var result = _equipmentFetcherService.GetEquipmentById(equipmentId);
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
+        var result = await _equipmentFetcherService.GetEquipmentByIdAsync(equipmentId);
+        return result.Status == OperationStatus.Success ? Ok(result.Result) : NotFound(result.Message);
     }
 
     [HttpGet]
