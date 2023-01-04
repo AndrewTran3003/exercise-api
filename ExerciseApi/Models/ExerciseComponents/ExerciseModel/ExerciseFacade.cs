@@ -7,7 +7,7 @@ namespace ExerciseApi.Models.ExerciseComponents.ExerciseModel
 	public class ExerciseFacade: FacadeComponent
     {
         [Required]
-        public ExerciseFacade? Rep { get; set; }
+        public Exercise? Exercise { get; set; }
     }
 }
 

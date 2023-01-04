@@ -6,7 +6,6 @@ namespace ExerciseApi.Models.ExerciseComponents.ExerciseModel
 	public class Exercise : Component
 	{
 		public List<ExerciseRepFacade>? ExerciseSet { get; set; }
-        public bool PerformConcurrently { get; set; }
         public bool Completed { get; set; }
     }
 }

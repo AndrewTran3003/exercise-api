@@ -3,6 +3,7 @@ using System;
 using ExerciseApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExerciseApi.Migrations
 {
     [DbContext(typeof(ExerciseApiDbContext))]
-    partial class ExerciseApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230104081028_testseeding2")]
+    partial class testseeding2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,6 +91,22 @@ namespace ExerciseApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BaseEquipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("501a6eda-20cb-4742-8cab-23f1763c28e0"),
+                            Description = "Plain white towel",
+                            Name = "Towel",
+                            Price = 4.0
+                        },
+                        new
+                        {
+                            Id = new Guid("3a66ae5e-2837-4dcc-9e0b-ff320e444172"),
+                            Description = "This is a treadmill",
+                            Name = "Treadmill",
+                            Price = 999.99000000000001
+                        });
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.BasicActionModel.BasicAction", b =>
@@ -99,7 +118,7 @@ namespace ExerciseApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("EquipmentId")
+                    b.Property<Guid>("EquipmentId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Instruction")
@@ -113,6 +132,24 @@ namespace ExerciseApi.Migrations
                     b.HasIndex("EquipmentId");
 
                     b.ToTable("BasicActions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8f4db0a9-592e-42e2-a829-aa1796f8c51d"),
+                            Description = "Put Towel To The Side",
+                            EquipmentId = new Guid("501a6eda-20cb-4742-8cab-23f1763c28e0"),
+                            Instruction = "If you are left handed, put the towel to your right side\n							   If you are right handed, put the towel to your left side",
+                            Name = "Put Towel To The Side"
+                        },
+                        new
+                        {
+                            Id = new Guid("e3d74580-7eef-4146-8d39-f988b7487b05"),
+                            Description = "Treadmill running exercise",
+                            EquipmentId = new Guid("3a66ae5e-2837-4dcc-9e0b-ff320e444172"),
+                            Instruction = "Run on the treadmill at 8 km/h",
+                            Name = "Treadmill running"
+                        });
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.BasicActionModel.BasicActionFacade", b =>
@@ -351,7 +388,9 @@ namespace ExerciseApi.Migrations
                 {
                     b.HasOne("ExerciseApi.Models.Equipment.BaseEquipment", "Equipment")
                         .WithMany()
-                        .HasForeignKey("EquipmentId");
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Equipment");
                 });
