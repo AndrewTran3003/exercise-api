@@ -3,6 +3,7 @@ using System;
 using ExerciseApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExerciseApi.Migrations
 {
     [DbContext(typeof(ExerciseApiDbContext))]
-    partial class ExerciseApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230102095045_testseeding")]
+    partial class testseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,10 +35,6 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<TimeSpan>("Duration")
@@ -65,9 +64,7 @@ namespace ExerciseApi.Migrations
 
                     b.ToTable("TimeComponent");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("TimeComponent");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Equipment.BaseEquipment", b =>
@@ -87,7 +84,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaseEquipment");
+                    b.ToTable("BaseEquiment", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.BasicActionModel.BasicAction", b =>
@@ -112,7 +109,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasIndex("EquipmentId");
 
-                    b.ToTable("BasicActions");
+                    b.ToTable("BasicAction", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.BasicActionModel.BasicActionFacade", b =>
@@ -136,7 +133,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasIndex("ExerciseStepId");
 
-                    b.ToTable("BasicActionFacades");
+                    b.ToTable("BasicActionFacade", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.ExerciseModel.Exercise", b =>
@@ -156,7 +153,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercise", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.ExerciseModel.ExerciseFacade", b =>
@@ -180,7 +177,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasIndex("WorkoutDayId");
 
-                    b.ToTable("ExerciseFacades");
+                    b.ToTable("ExerciseFacade", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.RepModel.ExerciseRep", b =>
@@ -203,7 +200,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseReps");
+                    b.ToTable("ExerciseRep", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.RepModel.ExerciseRepFacade", b =>
@@ -227,7 +224,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasIndex("RepId");
 
-                    b.ToTable("ExerciseRepFacades");
+                    b.ToTable("ExerciseRepFacade", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.StepModel.ExerciseStep", b =>
@@ -250,7 +247,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseSteps");
+                    b.ToTable("ExerciseStep", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.StepModel.ExerciseStepFacade", b =>
@@ -274,7 +271,7 @@ namespace ExerciseApi.Migrations
 
                     b.HasIndex("StepId");
 
-                    b.ToTable("ExerciseStepFacades");
+                    b.ToTable("ExerciseStepFacade", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.WorkoutDay", b =>
@@ -297,35 +294,35 @@ namespace ExerciseApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkoutDays");
+                    b.ToTable("WorkoutDay", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Break.BasicBreak", b =>
                 {
                     b.HasBaseType("ExerciseApi.Models.Components.TimeComponent");
 
-                    b.HasDiscriminator().HasValue("BasicBreak");
+                    b.ToTable("BasicBreak", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Break.BreakWithActions", b =>
                 {
                     b.HasBaseType("ExerciseApi.Models.Components.TimeComponent");
 
-                    b.HasDiscriminator().HasValue("BreakWithActions");
+                    b.ToTable("BreakWithActions", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Time.StartTime", b =>
                 {
                     b.HasBaseType("ExerciseApi.Models.Components.TimeComponent");
 
-                    b.HasDiscriminator().HasValue("StartTime");
+                    b.ToTable("StartTime", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Time.StopTime", b =>
                 {
                     b.HasBaseType("ExerciseApi.Models.Components.TimeComponent");
 
-                    b.HasDiscriminator().HasValue("StopTime");
+                    b.ToTable("StopTime", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.Components.TimeComponent", b =>
@@ -414,6 +411,42 @@ namespace ExerciseApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Step");
+                });
+
+            modelBuilder.Entity("ExerciseApi.Models.Break.BasicBreak", b =>
+                {
+                    b.HasOne("ExerciseApi.Models.Components.TimeComponent", null)
+                        .WithOne()
+                        .HasForeignKey("ExerciseApi.Models.Break.BasicBreak", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ExerciseApi.Models.Break.BreakWithActions", b =>
+                {
+                    b.HasOne("ExerciseApi.Models.Components.TimeComponent", null)
+                        .WithOne()
+                        .HasForeignKey("ExerciseApi.Models.Break.BreakWithActions", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ExerciseApi.Models.Time.StartTime", b =>
+                {
+                    b.HasOne("ExerciseApi.Models.Components.TimeComponent", null)
+                        .WithOne()
+                        .HasForeignKey("ExerciseApi.Models.Time.StartTime", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ExerciseApi.Models.Time.StopTime", b =>
+                {
+                    b.HasOne("ExerciseApi.Models.Components.TimeComponent", null)
+                        .WithOne()
+                        .HasForeignKey("ExerciseApi.Models.Time.StopTime", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ExerciseApi.Models.ExerciseComponents.BasicActionModel.BasicActionFacade", b =>
