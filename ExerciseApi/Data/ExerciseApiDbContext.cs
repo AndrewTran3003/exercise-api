@@ -25,7 +25,7 @@ namespace ExerciseApi.Data
         public DbSet<BasicActionFacade>? BasicActionFacades { get; set; }
         public DbSet<BasicBreak>? BasicBreaks { get; set; }
         public DbSet<BreakWithActions>? BreakWithActions { get; set; }
-        public DbSet<BaseEquipment>? BaseEquipment { get; set; }
+        public DbSet<BaseEquipment>? BaseEquipments { get; set; }
         public DbSet<StartTime>? StartTimes { get; set; }
         public DbSet<StopTime>? StopTimes { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

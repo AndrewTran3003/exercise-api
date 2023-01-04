@@ -1,4 +1,6 @@
 ﻿using ExerciseApi.Data;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ExerciseApiDbContext>();
-builder.Services.AddScoped<IEquipmentFetcherService,DefaultEquipmentFetcherService>();
+builder.Services.AddScoped<IEquipmentFetcherService, DefaultEquipmentFetcherService>();
+builder.Services.AddScoped<IEquipmentCreateService, DefaultEquipmentCreateService>();
+builder.Services.AddScoped<IEquipmentCreateRepository, DefaultEquipmentCreateRepository>();
 
 var app = builder.Build();
 
