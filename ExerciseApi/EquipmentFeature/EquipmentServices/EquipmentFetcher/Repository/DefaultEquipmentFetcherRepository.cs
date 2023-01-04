@@ -18,6 +18,15 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Reposi
             _mapper = config.CreateMapper();
             _context = context;
         }
+
+        public async Task<OperationResult<List<EquipmentEntity>>> GetAllAsync()
+        {
+            var result = (await _context.BaseEquipments.ToListAsync()).Select(e => _mapper.Map<EquipmentEntity>(e)).ToList();
+            return result == null
+                ? new OperationResult<List<EquipmentEntity>>(OperationStatus.Empty, string.Empty, null)
+                : new OperationResult<List<EquipmentEntity>>(OperationStatus.Success, string.Empty, result);
+        }
+
         public async Task<OperationResult<EquipmentEntity>> GetAsync(string equipmentId)
         {
             var result = await _context.BaseEquipments.FirstOrDefaultAsync(e => e.Id.ToString() == equipmentId);

@@ -5,6 +5,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Reposi
 {
     public interface IEquipmentFetcherRepository
     {
+        public Task<OperationResult<List<EquipmentEntity>>> GetAllAsync();
         public Task<OperationResult<EquipmentEntity>> GetAsync(string equipmentId);
     }
 }

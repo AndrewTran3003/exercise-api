@@ -26,10 +26,10 @@ public class EquipmentsController : ControllerBase
 
     [HttpGet]
     [Route("Equipments")]
-    public IActionResult GetEquipments()
+    public async Task<IActionResult> GetEquipments()
     {
-        var result = _equipmentFetcherService.GetAllEquipments();
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
+        var result = await _equipmentFetcherService.GetAllEquipmentsAsync();
+        return result.Status == OperationStatus.Success ? Ok(result.Result) : new EmptyResult();
     }
 
     [HttpPost]
