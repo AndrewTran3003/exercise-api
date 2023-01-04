@@ -1,4 +1,8 @@
 ﻿using ExerciseApi.Data;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Repository;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ExerciseApiDbContext>();
+builder.Services.AddScoped<IEquipmentFetcherService, DefaultEquipmentFetcherService>();
+builder.Services.AddScoped<IEquipmentFetcherRepository, DefaultEquipmentFetcherRepository>();
+builder.Services.AddScoped<IEquipmentCreateService, DefaultEquipmentCreateService>();
+builder.Services.AddScoped<IEquipmentCreateRepository, DefaultEquipmentCreateRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,7 +31,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 
