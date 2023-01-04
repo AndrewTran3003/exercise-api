@@ -1,10 +1,11 @@
 using ExerciseApi.EquipmentFeature.Models;
+using ExerciseApi.Helpers;
 
 namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher
 {
     public interface IEquipmentFetcherService
     {
-        public EquipmentEntity GetEquipmentById(string equipmentId);
-        public List<EquipmentEntity> GetAllEquipments();
+        public OperationResult<EquipmentEntity> GetEquipmentById(string equipmentId);
+        public OperationResult<List<EquipmentEntity>> GetAllEquipments();
     }
 }

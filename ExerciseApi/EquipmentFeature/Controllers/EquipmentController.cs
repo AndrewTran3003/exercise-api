@@ -1,4 +1,5 @@
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher;
+using ExerciseApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -13,13 +14,13 @@ public class EquipmentsController : ControllerBase
     public IActionResult GetEquipment(string equipmentId)
     {
         var result = _equipmentFetcherService.GetEquipmentById(equipmentId);
-        return Ok(result);
+        return result.Status == OperationStatus.Success ? Ok (result.Result) : BadRequest(result.Message);
     }
 
     [HttpGet]
     [Route("Equipments")]
     public IActionResult GetEquipments()
     {   var result = _equipmentFetcherService.GetAllEquipments();
-        return Ok(result);
+        return result.Status == OperationStatus.Success ? Ok (result.Result) : BadRequest(result.Message);
     }
 }
