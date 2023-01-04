@@ -1,5 +1,5 @@
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
-using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
 using ExerciseApi.EquipmentFeature.Models;
 using ExerciseApi.Helpers;
 using Microsoft.AspNetCore.Mvc;

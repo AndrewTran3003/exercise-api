@@ -1,7 +1,7 @@
 ﻿using ExerciseApi.Data;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
-using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 

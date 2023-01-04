@@ -1,7 +1,7 @@
 using ExerciseApi.EquipmentFeature.Models;
 using ExerciseApi.Helpers;
 
-namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher
+namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service
 {
     public interface IEquipmentFetcherService
     {

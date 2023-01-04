@@ -4,7 +4,7 @@ using ExerciseApi.Models.Equipment;
 using ExerciseApi.Data;
 using ExerciseApi.Helpers;
 
-namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher
+namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service
 {
     public class DefaultEquipmentFetcherService : IEquipmentFetcherService
     {
