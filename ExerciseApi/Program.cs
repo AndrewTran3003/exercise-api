@@ -1,4 +1,5 @@
 ﻿using ExerciseApi.Data;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ExerciseApiDbContext>();
+builder.Services.AddScoped<IEquipmentFetcherService,DefaultEquipmentFetcherService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
