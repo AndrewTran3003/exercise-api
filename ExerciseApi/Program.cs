@@ -3,6 +3,8 @@ using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Repository;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Repository;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,8 @@ builder.Services.AddScoped<IEquipmentFetcherService, DefaultEquipmentFetcherServ
 builder.Services.AddScoped<IEquipmentFetcherRepository, DefaultEquipmentFetcherRepository>();
 builder.Services.AddScoped<IEquipmentCreateService, DefaultEquipmentCreateService>();
 builder.Services.AddScoped<IEquipmentCreateRepository, DefaultEquipmentCreateRepository>();
-
+builder.Services.AddScoped<IEquipmentUpdateService, DefaultEquipmentUpdateService>();
+builder.Services.AddScoped<IEquipmentUpdateRepository, DefaultEquipmentUpdateRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
