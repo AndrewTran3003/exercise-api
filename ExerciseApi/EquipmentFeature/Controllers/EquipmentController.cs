@@ -1,5 +1,6 @@
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
+using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service;
 using ExerciseApi.EquipmentFeature.Models;
 using ExerciseApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,15 @@ public class EquipmentsController : ControllerBase
 {
     private readonly IEquipmentFetcherService _equipmentFetcherService;
     private readonly IEquipmentCreateService _equipmentCreateService;
+    private readonly IEquipmentUpdateService _equipmentUpdateService;
     public EquipmentsController(
         IEquipmentFetcherService equipmentFetcherService,
-        IEquipmentCreateService equipmentCreateService)
+        IEquipmentCreateService equipmentCreateService,
+        IEquipmentUpdateService equipmentUpdateService)
     {
         _equipmentFetcherService = equipmentFetcherService;
         _equipmentCreateService = equipmentCreateService;
+        _equipmentUpdateService = equipmentUpdateService;
     }
     [HttpGet]
     [Route("Equipments/{equipmentId}")]
@@ -37,6 +41,13 @@ public class EquipmentsController : ControllerBase
     public async Task<IActionResult> CreateEquipment([FromBody] EquipmentEntity equipment)
     {
         var result = await _equipmentCreateService.CreateEquipmentAsync(equipment);
+        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
+    }
+    [HttpPut]
+    [Route("Equipments/Update")]
+    public async Task<IActionResult> UpdateEquipment([FromBody] EquipmentEntity equipment)
+    {
+        var result = await _equipmentUpdateService.UpdateEquipmentAsync(equipment);
         return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
     }
 }
