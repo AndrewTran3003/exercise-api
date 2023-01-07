@@ -13,8 +13,12 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service
         }
         public async Task<OperationResult<EquipmentEntity>> CreateEquipmentAsync(EquipmentEntity entity)
         {
-            var result = await _repo.CreateAsync(entity);
-            return result;
+            return await _repo.CreateAsync(entity);
+        }
+
+        public async Task<OperationResult<List<EquipmentEntity>>> CreateMultipleEquipmentAsync(List<EquipmentEntity> equipmentList)
+        {
+            return await _repo.CreateListAsync(equipmentList);
         }
     }
 }
