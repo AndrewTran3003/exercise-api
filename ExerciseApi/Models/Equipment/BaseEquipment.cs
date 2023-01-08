@@ -1,11 +1,9 @@
-﻿using System;
+﻿using ExerciseApi.Models.Components;
+
 namespace ExerciseApi.Models.Equipment;
 
-public class BaseEquipment
+public class BaseEquipment : Component
 {
-	public Guid Id { get; set; }
-	public String? Name { get; set; }
-	public String? Description { get; set; }
-	public double Price { get; set; }
+    public double Price { get; set; }
 }
 

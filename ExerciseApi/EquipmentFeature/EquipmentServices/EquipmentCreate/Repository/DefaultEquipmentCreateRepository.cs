@@ -23,7 +23,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
                 var baseEquipment = ParseBasedEquipment(equipment);
                 await _context.BaseEquipments.AddAsync(baseEquipment);
                 await _context.SaveChangesAsync();
-                var createdEquipment = GetCreatedEquipment();
+                var createdEquipment = GetCreatedEquipment(baseEquipment);
                 return new OperationResult<EquipmentEntity>(OperationStatus.Success, String.Empty, createdEquipment);
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
                 var baseEquipmentList = ParseBaseEquipmenttList(equipmentList);
                 await _context.BaseEquipments.AddRangeAsync(baseEquipmentList);
                 await _context.SaveChangesAsync();
-                var createdEquipments = GetCreatedEquipments(equipmentList.Count);
+                var createdEquipments = GetCreatedEquipments(baseEquipmentList);
                 return new OperationResult<List<EquipmentEntity>>(OperationStatus.Success, String.Empty, createdEquipments);
             }
             catch (Exception e)
@@ -49,21 +49,16 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
             }
         }
 
-        private EquipmentEntity GetCreatedEquipment()
+        private EquipmentEntity GetCreatedEquipment(BaseEquipment equipment)
         {
-            return _mapper.Map<EquipmentEntity>(
-                _context.BaseEquipments.OrderBy(e => e.Id).Last()
-            );
+            return _mapper.Map<EquipmentEntity>(equipment);
         }
 
-        private List<EquipmentEntity> GetCreatedEquipments(int number)
+        private List<EquipmentEntity> GetCreatedEquipments(List<BaseEquipment> equipmentList)
         {
-            return _context.BaseEquipments
-                            .OrderByDescending(e => e.Id)
-                            .Take(number)
-                            .OrderBy(e => e.Id)
-                            .Select(e => _mapper.Map<EquipmentEntity>(e))
-                            .ToList();
+            return equipmentList
+                    .Select(e => _mapper.Map<EquipmentEntity>(e))
+                    .ToList();
         }
 
         private IMapper CreateMapper()
