@@ -6,5 +6,6 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Reposit
     public interface IEquipmentUpdateRepository
     {
         public Task<OperationResult<object>> UpdateAsync(EquipmentEntity equipment);
+        public bool EquipmentExits(EquipmentEntity equipment);
     }
 }

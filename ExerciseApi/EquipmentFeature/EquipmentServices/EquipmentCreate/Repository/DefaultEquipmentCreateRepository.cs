@@ -73,14 +73,19 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
 
         private List<BaseEquipment> ParseBaseEquipmenttList(List<EquipmentEntity> equipmentList)
         {
-            return equipmentList.Select(e => ParseBasedEquipment(e))
-                                .ToList();
+            return equipmentList
+                    .Select(e => ParseBasedEquipment(e))
+                    .ToList();
         }
 
         private BaseEquipment ParseBasedEquipment(EquipmentEntity equipment)
         {
             var result = _mapper.Map<BaseEquipment>(equipment);
             result.Id = Guid.NewGuid();
+            result.DateCreated = DateTime.UtcNow;
+            result.CreatedBy = "Root";
+            result.LastUpdated = DateTime.UtcNow;
+            result.LastUpdatedBy = "Root";
             return result;
         }
     }

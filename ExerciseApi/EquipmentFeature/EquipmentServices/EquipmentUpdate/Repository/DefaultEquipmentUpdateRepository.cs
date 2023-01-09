@@ -16,11 +16,18 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Reposit
             _mapper = config.CreateMapper();
             _context = context;
         }
-        public async Task<OperationResult<object>> UpdateAsync(EquipmentEntity equipment)
+
+        public bool EquipmentExits(EquipmentEntity equipment)
+        {
+            return _context.BaseEquipments.Any(e => e.Id == equipment.Id);
+        }
+
+        public async Task<OperationResult<object>> UpdateAsync(EquipmentEntity equipmentIncoming)
         {
             try
             {
-                _context.BaseEquipments.Update(_mapper.Map<BaseEquipment>(equipment));
+                var equipmentCurrent = _context.BaseEquipments.First(e => e.Id == equipmentIncoming.Id);
+                UpdateEquipmentInfo(equipmentCurrent, equipmentIncoming);
                 await _context.SaveChangesAsync();
                 return new OperationResult<object>(OperationStatus.Success, "Item updated", null);
             }
@@ -28,6 +35,15 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Reposit
             {
                 return new OperationResult<object>(OperationStatus.Error, e.Message, null);
             }
+        }
+
+        private void UpdateEquipmentInfo(BaseEquipment equipmentCurrent, BaseEquipment equipmentIncoming)
+        {
+            equipmentCurrent.Name = equipmentIncoming.Name;
+            equipmentCurrent.Description = equipmentIncoming.Description;
+            equipmentCurrent.Price = equipmentIncoming.Price;
+            equipmentCurrent.LastUpdated = DateTime.UtcNow;
+            equipmentCurrent.LastUpdatedBy = "Root";
         }
     }
 }
