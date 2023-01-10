@@ -21,6 +21,7 @@ public class EquipmentsController : ControllerBase
         _equipmentCreateService = equipmentCreateService;
         _equipmentUpdateService = equipmentUpdateService;
     }
+
     [HttpGet]
     [Route("{equipmentId}")]
     public async Task<IActionResult> GetEquipment(string equipmentId)
@@ -57,6 +58,18 @@ public class EquipmentsController : ControllerBase
     public async Task<IActionResult> UpdateEquipment([FromBody] EquipmentEntity equipment)
     {
         var result = await _equipmentUpdateService.UpdateEquipmentAsync(equipment);
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
+        return result.Status == OperationStatus.Success
+            ? Ok(result.Message)
+            : BadRequest(result.Message);
+    }
+
+    [HttpPut]
+    [Route("UpdateMany")]
+    public async Task<IActionResult> UpdateMultipleEquipment([FromBody] List<EquipmentEntity> equipmentList)
+    {
+        var result = await _equipmentUpdateService.UpdateEquipmentMulitpleAsync(equipmentList);
+        return result.Status == OperationStatus.Success
+            ? Ok(result.Message)
+            : BadRequest(result.Message);
     }
 }

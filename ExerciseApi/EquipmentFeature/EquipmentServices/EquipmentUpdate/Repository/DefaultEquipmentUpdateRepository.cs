@@ -22,11 +22,23 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Reposit
             return _context.BaseEquipments.Any(e => e.Id == equipment.Id);
         }
 
+        public bool EquipmentsExist(List<EquipmentEntity> equipmentList)
+        {
+            foreach (EquipmentEntity equipment in equipmentList)
+            {
+                if (!EquipmentExits(equipment))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public async Task<OperationResult<object>> UpdateAsync(EquipmentEntity equipmentIncoming)
         {
             try
             {
-                var equipmentCurrent = _context.BaseEquipments.First(e => e.Id == equipmentIncoming.Id);
+                var equipmentCurrent = FindExistingEquipmentById(equipmentIncoming.Id);
                 UpdateEquipmentInfo(equipmentCurrent, equipmentIncoming);
                 await _context.SaveChangesAsync();
                 return new OperationResult<object>(OperationStatus.Success, "Item updated", null);
@@ -35,6 +47,29 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Reposit
             {
                 return new OperationResult<object>(OperationStatus.Error, e.Message, null);
             }
+        }
+
+        public async Task<OperationResult<object>> UpdateMultipleAsync(List<EquipmentEntity> equipments)
+        {
+            try
+            {
+                foreach (EquipmentEntity equipmentIncoming in equipments)
+                {
+                    var equipmentCurrent = FindExistingEquipmentById(equipmentIncoming.Id);
+                    UpdateEquipmentInfo(equipmentCurrent, equipmentIncoming);
+                }
+                await _context.SaveChangesAsync();
+                return new OperationResult<object>(OperationStatus.Success, "Item updated", null);
+            }
+            catch (Exception e)
+            {
+                return new OperationResult<object>(OperationStatus.Error, e.Message, null);
+            }
+        }
+
+        private BaseEquipment FindExistingEquipmentById (Guid equipmentId)
+        {
+            return _context.BaseEquipments.First(e => e.Id == equipmentId);
         }
 
         private void UpdateEquipmentInfo(BaseEquipment equipmentCurrent, BaseEquipment equipmentIncoming)
