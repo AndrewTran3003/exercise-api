@@ -3,6 +3,7 @@ using System;
 using ExerciseApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ExerciseApi.Migrations
 {
     [DbContext(typeof(ExerciseApiDbContext))]
-    partial class ExerciseApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230108060844_add-audit-code")]
+    partial class addauditcode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,12 +33,6 @@ namespace ExerciseApi.Migrations
 
                     b.Property<Guid?>("BasicActionFacadeId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -60,6 +57,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -88,12 +86,6 @@ namespace ExerciseApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -101,6 +93,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -120,12 +113,6 @@ namespace ExerciseApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -139,6 +126,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -184,12 +172,6 @@ namespace ExerciseApi.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -197,6 +179,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -240,12 +223,6 @@ namespace ExerciseApi.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -253,6 +230,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -299,12 +277,6 @@ namespace ExerciseApi.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -312,6 +284,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -358,12 +331,6 @@ namespace ExerciseApi.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime>("DateTaken")
                         .HasColumnType("timestamp with time zone");
 
@@ -374,6 +341,7 @@ namespace ExerciseApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastUpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")

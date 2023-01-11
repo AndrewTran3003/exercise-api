@@ -6,5 +6,6 @@ namespace ExerciseApi.Helpers
         Error = 1,
         NotFound = 2,
         Empty = 3,
+        ServerError = 4,
     }
 }
