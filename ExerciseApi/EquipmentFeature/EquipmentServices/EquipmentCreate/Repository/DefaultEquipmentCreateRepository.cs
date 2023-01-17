@@ -1,28 +1,32 @@
 using AutoMapper;
 using ExerciseApi.Data;
 using ExerciseApi.EquipmentFeature.Models;
+using ExerciseApi.EquipmentFeature.Models.Dto;
 using ExerciseApi.Helpers;
 using ExerciseApi.Models.Equipment;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository
 {
     public class DefaultEquipmentCreateRepository : IEquipmentCreateRepository
     {
-        private readonly ExerciseApiDbContext _context;
+        private readonly IDbContextFactory<ExerciseApiDbContext> _context;
         private readonly IMapper _mapper;
 
-        public DefaultEquipmentCreateRepository(ExerciseApiDbContext context)
+        public DefaultEquipmentCreateRepository(IDbContextFactory<ExerciseApiDbContext> context)
         {
             _mapper = CreateMapper();
             _context = context;
         }
-        public async Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentEntity equipment)
+        public async Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentDto equipment)
         {
+            await using ExerciseApiDbContext context = _context.CreateDbContext();
+
             try
             {
                 var baseEquipment = ParseBasedEquipment(equipment);
-                await _context.BaseEquipments.AddAsync(baseEquipment);
-                await _context.SaveChangesAsync();
+                await context.BaseEquipments.AddAsync(baseEquipment);
+                await context.SaveChangesAsync();
                 var createdEquipment = GetCreatedEquipment(baseEquipment);
                 return new OperationResult<EquipmentEntity>(OperationStatus.Success, String.Empty, createdEquipment);
             }
@@ -33,13 +37,14 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
 
         }
 
-        public async Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentEntity> equipmentList)
+        public async Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentDto> equipmentList)
         {
+            await using ExerciseApiDbContext context = _context.CreateDbContext();
             try
             {
                 var baseEquipmentList = ParseBaseEquipmenttList(equipmentList);
-                await _context.BaseEquipments.AddRangeAsync(baseEquipmentList);
-                await _context.SaveChangesAsync();
+                await context.BaseEquipments.AddRangeAsync(baseEquipmentList);
+                await context.SaveChangesAsync();
                 var createdEquipments = GetCreatedEquipments(baseEquipmentList);
                 return new OperationResult<List<EquipmentEntity>>(OperationStatus.Success, String.Empty, createdEquipments);
             }
@@ -67,18 +72,19 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
             {
                 cfg.CreateMap<EquipmentEntity, BaseEquipment>();
                 cfg.CreateMap<BaseEquipment, EquipmentEntity>();
+                cfg.CreateMap<EquipmentDto, BaseEquipment>();
             })
             .CreateMapper();
         }
 
-        private List<BaseEquipment> ParseBaseEquipmenttList(List<EquipmentEntity> equipmentList)
+        private List<BaseEquipment> ParseBaseEquipmenttList(List<EquipmentDto> equipmentList)
         {
             return equipmentList
                     .Select(e => ParseBasedEquipment(e))
                     .ToList();
         }
 
-        private BaseEquipment ParseBasedEquipment(EquipmentEntity equipment)
+        private BaseEquipment ParseBasedEquipment(EquipmentDto equipment)
         {
             var result = _mapper.Map<BaseEquipment>(equipment);
             result.Id = Guid.NewGuid();
