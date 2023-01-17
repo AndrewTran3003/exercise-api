@@ -28,7 +28,8 @@ builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     .AddTypeExtension<EquipmentFetchQuery>()
     .AddMutationType<Mutation>()
-    .AddTypeExtension<EquipmentCreateMutation>();
+    .AddTypeExtension<EquipmentCreateMutation>()
+    .AddTypeExtension<EquipmentUpdateMutation>();
     
 var app = builder.Build();
 

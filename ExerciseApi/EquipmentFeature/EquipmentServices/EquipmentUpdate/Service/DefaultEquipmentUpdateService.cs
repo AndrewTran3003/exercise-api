@@ -1,6 +1,7 @@
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Repository;
 using ExerciseApi.EquipmentFeature.Models;
+using ExerciseApi.EquipmentFeature.Models.Dto;
 using ExerciseApi.Helpers;
 
 namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service
@@ -13,7 +14,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service
         {
             _repo = repo;
         }
-        public async Task<OperationResult<object>> UpdateEquipmentAsync(EquipmentEntity equipment)
+        public async Task<OperationResult<object>> UpdateEquipmentAsync(EquipmentDto equipment)
         {
             if (equipment == null)
             {
@@ -23,14 +24,14 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service
             {
                 return new OperationResult<object>(OperationStatus.Error, "The Id is required", null);
             }
-            if (!_repo.EquipmentExits(equipment))
+            if (!await _repo.EquipmentExitsAsync(equipment))
             {
                 return new OperationResult<object>(OperationStatus.NotFound, $"There is no equipment with Id {equipment.Id.ToString()}", null);
             }
             return await _repo.UpdateAsync(equipment);
         }
 
-        public async Task<OperationResult<object>> UpdateEquipmentMulitpleAsync(List<EquipmentEntity> equipmentList)
+        public async Task<OperationResult<object>> UpdateEquipmentMulitpleAsync(List<EquipmentDto> equipmentList)
         {
             if (equipmentList == null)
             {
@@ -40,16 +41,16 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service
             {
                 return new OperationResult<object>(OperationStatus.Error, "An Equipment Id is missing from the list", null);
             }
-            if (!_repo.EquipmentsExist(equipmentList))
+            if (!await _repo.EquipmentsExistAsync(equipmentList))
             {
                 return new OperationResult<object>(OperationStatus.NotFound, "An equipment with Id that does not exist is in the list", null);
             }
             return await _repo.UpdateMultipleAsync(equipmentList);
         }
 
-        private OperationResult<object> CheckIdNullList(List<EquipmentEntity> equipmentList)
+        private OperationResult<object> CheckIdNullList(List<EquipmentDto> equipmentList)
         {
-            foreach (EquipmentEntity equipment in equipmentList)
+            foreach (EquipmentDto equipment in equipmentList)
             {
                 var checkResult = CheckIdNull(equipment);
                 if (checkResult.Status != OperationStatus.Success)
@@ -60,7 +61,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service
             return new OperationResult<object>(OperationStatus.Success, String.Empty, null);
         }
 
-        private OperationResult<object> CheckIdNull(EquipmentEntity equipment)
+        private OperationResult<object> CheckIdNull(EquipmentDto equipment)
         {
             var equipmentIdString = equipment.Id.ToString();
             return String.IsNullOrEmpty(equipment.Id.ToString()) || String.IsNullOrWhiteSpace(equipment.Id.ToString())
