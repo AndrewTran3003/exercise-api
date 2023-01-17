@@ -20,14 +20,6 @@ public class EquipmentsController : ControllerBase
     }
 
 
-    [HttpPost]
-    [Route("CreateMany")]
-    public async Task<IActionResult> CreateMultipleEquipments([FromBody] List<EquipmentEntity> equipmentList)
-    {
-        var result = await _equipmentCreateService.CreateMultipleEquipmentAsync(equipmentList);
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
-    }
-
     [HttpPut]
     [Route("Update")]
     public async Task<IActionResult> UpdateEquipment([FromBody] EquipmentEntity equipment)

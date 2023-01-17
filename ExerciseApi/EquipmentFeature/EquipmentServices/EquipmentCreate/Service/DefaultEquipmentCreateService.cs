@@ -17,7 +17,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service
             return await _repo.CreateAsync(entity);
         }
 
-        public async Task<OperationResult<List<EquipmentEntity>>> CreateMultipleEquipmentAsync(List<EquipmentEntity> equipmentList)
+        public async Task<OperationResult<List<EquipmentEntity>>> CreateMultipleEquipmentAsync(List<EquipmentDto> equipmentList)
         {
             return await _repo.CreateListAsync(equipmentList);
         }

@@ -24,7 +24,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
 
             try
             {
-                var baseEquipment = ParseEquipment(equipment);
+                var baseEquipment = ParseBasedEquipment(equipment);
                 await context.BaseEquipments.AddAsync(baseEquipment);
                 await context.SaveChangesAsync();
                 var createdEquipment = GetCreatedEquipment(baseEquipment);
@@ -37,7 +37,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
 
         }
 
-        public async Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentEntity> equipmentList)
+        public async Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentDto> equipmentList)
         {
             await using ExerciseApiDbContext context = _context.CreateDbContext();
             try
@@ -77,24 +77,14 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
             .CreateMapper();
         }
 
-        private List<BaseEquipment> ParseBaseEquipmenttList(List<EquipmentEntity> equipmentList)
+        private List<BaseEquipment> ParseBaseEquipmenttList(List<EquipmentDto> equipmentList)
         {
             return equipmentList
                     .Select(e => ParseBasedEquipment(e))
                     .ToList();
         }
 
-        private BaseEquipment ParseBasedEquipment(EquipmentEntity equipment)
-        {
-            var result = _mapper.Map<BaseEquipment>(equipment);
-            result.Id = Guid.NewGuid();
-            result.DateCreated = DateTime.UtcNow;
-            result.CreatedBy = "Root";
-            result.LastUpdated = DateTime.UtcNow;
-            result.LastUpdatedBy = "Root";
-            return result;
-        }
-        private BaseEquipment ParseEquipment(EquipmentDto equipment)
+        private BaseEquipment ParseBasedEquipment(EquipmentDto equipment)
         {
             var result = _mapper.Map<BaseEquipment>(equipment);
             result.Id = Guid.NewGuid();

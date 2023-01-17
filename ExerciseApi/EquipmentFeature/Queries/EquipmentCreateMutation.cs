@@ -15,9 +15,17 @@ namespace ExerciseApi.EquipmentFeature.Queries
 		{
 			_service = service;
 		}
-		public async Task<OperationResult<EquipmentEntity>> CreateOne(EquipmentDto equipment)
+
+		[GraphQLName("CreateOneEquipment")]
+		public async Task<OperationResult<EquipmentEntity>> CreateOneEquipmentAsync(EquipmentDto equipment)
 		{
 			return await _service.CreateEquipmentAsync(equipment);
+		}
+
+		[GraphQLName("CreateManyEquipment")]
+		public async Task<OperationResult<List<EquipmentEntity>>> CreateManyEquipmentsAsync(List<EquipmentDto> equipmentList)
+		{
+			return await _service.CreateMultipleEquipmentAsync(equipmentList);
 		}
 	}
 }

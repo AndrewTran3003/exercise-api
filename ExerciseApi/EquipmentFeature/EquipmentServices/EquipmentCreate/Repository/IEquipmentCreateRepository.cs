@@ -7,6 +7,6 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
     public interface IEquipmentCreateRepository
     {
         public Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentDto equipment);
-        public Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentEntity> equipmentList);
+        public Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentDto> equipmentList);
     }
 }
