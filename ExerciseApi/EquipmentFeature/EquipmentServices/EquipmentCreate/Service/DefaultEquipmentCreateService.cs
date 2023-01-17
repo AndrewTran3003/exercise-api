@@ -1,5 +1,6 @@
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository;
 using ExerciseApi.EquipmentFeature.Models;
+using ExerciseApi.EquipmentFeature.Models.Dto;
 using ExerciseApi.Helpers;
 
 namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service
@@ -11,7 +12,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Service
         {
             _repo = repo;
         }
-        public async Task<OperationResult<EquipmentEntity>> CreateEquipmentAsync(EquipmentEntity entity)
+        public async Task<OperationResult<EquipmentEntity>> CreateEquipmentAsync(EquipmentDto entity)
         {
             return await _repo.CreateAsync(entity);
         }

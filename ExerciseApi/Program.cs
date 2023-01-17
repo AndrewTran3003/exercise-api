@@ -26,7 +26,9 @@ builder.Services.AddScoped<IEquipmentUpdateRepository, DefaultEquipmentUpdateRep
 builder.Services.AddGraphQLServer()
     .RegisterDbContext<ExerciseApiDbContext>()
     .AddQueryType<Query>()
-    .AddTypeExtension<EquipmentFetchQuery>();
+    .AddTypeExtension<EquipmentFetchQuery>()
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<EquipmentCreateMutation>();
     
 var app = builder.Build();
 

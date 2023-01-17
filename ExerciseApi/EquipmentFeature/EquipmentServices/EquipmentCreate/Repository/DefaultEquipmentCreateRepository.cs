@@ -1,6 +1,7 @@
 using AutoMapper;
 using ExerciseApi.Data;
 using ExerciseApi.EquipmentFeature.Models;
+using ExerciseApi.EquipmentFeature.Models.Dto;
 using ExerciseApi.Helpers;
 using ExerciseApi.Models.Equipment;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +18,13 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
             _mapper = CreateMapper();
             _context = context;
         }
-        public async Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentEntity equipment)
+        public async Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentDto equipment)
         {
             await using ExerciseApiDbContext context = _context.CreateDbContext();
 
             try
             {
-                var baseEquipment = ParseBasedEquipment(equipment);
+                var baseEquipment = ParseEquipment(equipment);
                 await context.BaseEquipments.AddAsync(baseEquipment);
                 await context.SaveChangesAsync();
                 var createdEquipment = GetCreatedEquipment(baseEquipment);
@@ -71,6 +72,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
             {
                 cfg.CreateMap<EquipmentEntity, BaseEquipment>();
                 cfg.CreateMap<BaseEquipment, EquipmentEntity>();
+                cfg.CreateMap<EquipmentDto, BaseEquipment>();
             })
             .CreateMapper();
         }
@@ -83,6 +85,16 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
         }
 
         private BaseEquipment ParseBasedEquipment(EquipmentEntity equipment)
+        {
+            var result = _mapper.Map<BaseEquipment>(equipment);
+            result.Id = Guid.NewGuid();
+            result.DateCreated = DateTime.UtcNow;
+            result.CreatedBy = "Root";
+            result.LastUpdated = DateTime.UtcNow;
+            result.LastUpdatedBy = "Root";
+            return result;
+        }
+        private BaseEquipment ParseEquipment(EquipmentDto equipment)
         {
             var result = _mapper.Map<BaseEquipment>(equipment);
             result.Id = Guid.NewGuid();

@@ -19,13 +19,6 @@ public class EquipmentsController : ControllerBase
         _equipmentUpdateService = equipmentUpdateService;
     }
 
-    [HttpPost]
-    [Route("Create")]
-    public async Task<IActionResult> CreateEquipment([FromBody] EquipmentEntity equipment)
-    {
-        var result = await _equipmentCreateService.CreateEquipmentAsync(equipment);
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : BadRequest(result.Message);
-    }
 
     [HttpPost]
     [Route("CreateMany")]
