@@ -31,6 +31,7 @@
     <None Remove="Models\Time\" />
     <None Remove="Models\Equipment\" />
     <None Remove="Models\ExerciseComponents\ExerciseModel\" />
+    <None Remove="Queries\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -39,5 +40,6 @@
     <Folder Include="Models\Time\" />
     <Folder Include="Models\Equipment\" />
     <Folder Include="Models\ExerciseComponents\ExerciseModel\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 </Project>

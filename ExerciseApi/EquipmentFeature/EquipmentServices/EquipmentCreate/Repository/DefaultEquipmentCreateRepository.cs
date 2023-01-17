@@ -3,26 +3,29 @@ using ExerciseApi.Data;
 using ExerciseApi.EquipmentFeature.Models;
 using ExerciseApi.Helpers;
 using ExerciseApi.Models.Equipment;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Repository
 {
     public class DefaultEquipmentCreateRepository : IEquipmentCreateRepository
     {
-        private readonly ExerciseApiDbContext _context;
+        private readonly IDbContextFactory<ExerciseApiDbContext> _context;
         private readonly IMapper _mapper;
 
-        public DefaultEquipmentCreateRepository(ExerciseApiDbContext context)
+        public DefaultEquipmentCreateRepository(IDbContextFactory<ExerciseApiDbContext> context)
         {
             _mapper = CreateMapper();
             _context = context;
         }
         public async Task<OperationResult<EquipmentEntity>> CreateAsync(EquipmentEntity equipment)
         {
+            await using ExerciseApiDbContext context = _context.CreateDbContext();
+
             try
             {
                 var baseEquipment = ParseBasedEquipment(equipment);
-                await _context.BaseEquipments.AddAsync(baseEquipment);
-                await _context.SaveChangesAsync();
+                await context.BaseEquipments.AddAsync(baseEquipment);
+                await context.SaveChangesAsync();
                 var createdEquipment = GetCreatedEquipment(baseEquipment);
                 return new OperationResult<EquipmentEntity>(OperationStatus.Success, String.Empty, createdEquipment);
             }
@@ -35,11 +38,12 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentCreate.Reposit
 
         public async Task<OperationResult<List<EquipmentEntity>>> CreateListAsync(List<EquipmentEntity> equipmentList)
         {
+            await using ExerciseApiDbContext context = _context.CreateDbContext();
             try
             {
                 var baseEquipmentList = ParseBaseEquipmenttList(equipmentList);
-                await _context.BaseEquipments.AddRangeAsync(baseEquipmentList);
-                await _context.SaveChangesAsync();
+                await context.BaseEquipments.AddRangeAsync(baseEquipmentList);
+                await context.SaveChangesAsync();
                 var createdEquipments = GetCreatedEquipments(baseEquipmentList);
                 return new OperationResult<List<EquipmentEntity>>(OperationStatus.Success, String.Empty, createdEquipments);
             }

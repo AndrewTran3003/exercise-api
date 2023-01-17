@@ -5,6 +5,7 @@ using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Repository
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Service;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Repository;
 using ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentUpdate.Service;
+using ExerciseApi.Queries;
 using ExerciseApi.EquipmentFeature.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,9 @@ builder.Services.AddScoped<IEquipmentUpdateService, DefaultEquipmentUpdateServic
 builder.Services.AddScoped<IEquipmentUpdateRepository, DefaultEquipmentUpdateRepository>();
 builder.Services.AddGraphQLServer()
     .RegisterDbContext<ExerciseApiDbContext>()
-    .AddQueryType<EquipmentRetrieveQuery>();
+    .AddQueryType<Query>()
+    .AddTypeExtension<EquipmentFetchQuery>();
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
