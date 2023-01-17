@@ -8,9 +8,14 @@ namespace ExerciseApi.EquipmentFeature.Queries {
         public EquipmentRetrieveQuery(IEquipmentFetcherService equipmentFetcher) {
             _equipmentFetcher = equipmentFetcher;
         }
-        public async Task<List<EquipmentEntity>?> GetEquipments(){
-              var result = await _equipmentFetcher.GetAllEquipmentsAsync();
-              return result.Status == OperationStatus.Success ? result.Result : null;
+        public async Task<OperationResult<List<EquipmentEntity>?>> GetEquipments(){
+              return await _equipmentFetcher.GetAllEquipmentsAsync();
+
+        }
+        public async Task<OperationResult<EquipmentEntity?>> GetEquipment(string equipmentId)
+        {
+            return await _equipmentFetcher.GetEquipmentByIdAsync(equipmentId);
+            
         }
     }
 }

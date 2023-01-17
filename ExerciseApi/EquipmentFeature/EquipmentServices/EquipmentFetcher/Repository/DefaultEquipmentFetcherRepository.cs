@@ -24,7 +24,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Reposi
             await using ExerciseApiDbContext context = _context.CreateDbContext();
             var result = (await context.BaseEquipments.ToListAsync()).Select(e => _mapper.Map<EquipmentEntity>(e)).ToList();
             return result == null
-                ? new OperationResult<List<EquipmentEntity>>(OperationStatus.Empty, string.Empty, null)
+                ? new OperationResult<List<EquipmentEntity>>(OperationStatus.Empty, string.Empty, new List<EquipmentEntity>())
                 : new OperationResult<List<EquipmentEntity>>(OperationStatus.Success, string.Empty, result);
         }
 
@@ -33,7 +33,7 @@ namespace ExerciseApi.EquipmentFeature.EquipmentServices.EquipmentFetcher.Reposi
             await using ExerciseApiDbContext context = _context.CreateDbContext();
             var result = await context.BaseEquipments.FirstOrDefaultAsync(e => e.Id.ToString() == equipmentId);
             return result == null
-                ? new OperationResult<EquipmentEntity>(OperationStatus.NotFound, $"Cannot find equipment with Id {equipmentId}", null)
+                ? new OperationResult<EquipmentEntity>(OperationStatus.NotFound, $"Cannot find equipment with Id {equipmentId}", new EquipmentEntity())
                 : new OperationResult<EquipmentEntity>(OperationStatus.Success, string.Empty, _mapper.Map<EquipmentEntity>(result));
         }
     }

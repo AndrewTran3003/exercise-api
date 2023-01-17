@@ -9,32 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 [Route("{controller}")]
 public class EquipmentsController : ControllerBase
 {
-    private readonly IEquipmentFetcherService _equipmentFetcherService;
     private readonly IEquipmentCreateService _equipmentCreateService;
     private readonly IEquipmentUpdateService _equipmentUpdateService;
     public EquipmentsController(
-        IEquipmentFetcherService equipmentFetcherService,
         IEquipmentCreateService equipmentCreateService,
         IEquipmentUpdateService equipmentUpdateService)
     {
-        _equipmentFetcherService = equipmentFetcherService;
         _equipmentCreateService = equipmentCreateService;
         _equipmentUpdateService = equipmentUpdateService;
-    }
-
-    [HttpGet]
-    [Route("{equipmentId}")]
-    public async Task<IActionResult> GetEquipment(string equipmentId)
-    {
-        var result = await _equipmentFetcherService.GetEquipmentByIdAsync(equipmentId);
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : NotFound(result.Message);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetEquipments()
-    {
-        var result = await _equipmentFetcherService.GetAllEquipmentsAsync();
-        return result.Status == OperationStatus.Success ? Ok(result.Result) : new EmptyResult();
     }
 
     [HttpPost]
