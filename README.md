@@ -4,7 +4,7 @@
 * To build the image from the docker file
 
 ```bash
-docker build -t <image-name> 
+docker build -t <image-name> .
 ```
 
 * To build a container, run
